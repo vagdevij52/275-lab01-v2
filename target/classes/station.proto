@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option java_package = "com.yrrhelp.grpc";
+
+service station{
+	rpc getStationData(GetStationDataRequest) returns (APIResponse);
+}
+
+
+message GetStationDataRequest{
+	string filename = 1;
+}
+
+message APIResponse{
+	string message = 1;
+}
+
+message Empty{
+}
