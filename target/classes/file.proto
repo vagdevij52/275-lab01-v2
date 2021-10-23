@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+option java_package = "com.message.proto";
+
+service FileService{
+	rpc uploadfile(stream UploadFileRequest) returns (UploadFileResponse);
+}
+
+enum Status {
+  PENDING = 0;
+  IN_PROGRESS = 1;
+  SUCCESS = 2;
+  FAILED = 3;
+}
+
+message FileContent {
+  bytes content = 1;
+}
+
+message UploadFileRequest{
+	bytes file = 1;
+}
+
+message UploadFileResponse{
+	Status status = 1;
+}
+
+message Empty{
+}
