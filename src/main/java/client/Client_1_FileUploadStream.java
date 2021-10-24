@@ -32,16 +32,17 @@ public class Client_1_FileUploadStream{
 	MesonetProcessor mp = new MesonetProcessor();
 	public Map createDict() {
 		
-		map.put(1, "201202012000");
-		map.put(2, "201202012100");
-		map.put(3, "201202012200");
-		map.put(4, "201202012300");
-		map.put(5, "201202021200");
-//		map.put(6, "201202021400");
-//		map.put(7, "201202021700");
-//		map.put(8, "201202021900");
-//		map.put(9, "201202022000");
-//		map.put(10, "201202022100");
+//		map.put(1, "201202012000");
+//		map.put(2, "201202012100");
+//		map.put(3, "201202012200");
+//		map.put(4, "201202012300");
+//		map.put(5, "201202021200");
+		
+		map.put(1, "201402010500");
+		map.put(2, "201402010400");
+		map.put(3, "201402010300");
+		map.put(4, "201402010200");
+		map.put(5, "201402010100");
 		return map;		
 	}
 	

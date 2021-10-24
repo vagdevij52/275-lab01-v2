@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option java_package = "com.message.proto";
+
+
+service QueryProcessor {
+  // Sends a query
+  rpc sendQuery (QueryRequest) returns (QueryReply) {}
+}
+
+message QueryRequest {
+  string query = 1;
+}
+
+message QueryReply {
+  string message = 1;
+}
+
+message Empty{
+}

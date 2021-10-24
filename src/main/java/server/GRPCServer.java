@@ -9,6 +9,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
+import services.UploadFileBlockingService;
 import services.UploadFileService;
 
 public class GRPCServer{
@@ -53,8 +54,10 @@ public class GRPCServer{
 	        
 	        try {
 				var serverBuilder = configureExecutor(ServerBuilder.forPort(9090));
-				 server = serverBuilder.addService(
-						 new UploadFileService()).maxInboundMessageSize(1024*1024*1024).build();
+				 server = serverBuilder
+						 .addService(new UploadFileService())
+						 .addService(new UploadFileBlockingService())
+						 .maxInboundMessageSize(1024*1024*1024).build();
 				 server.start();
 				 
 				 System.out.println("server started at "+ server.getPort());

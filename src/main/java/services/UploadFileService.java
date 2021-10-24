@@ -23,45 +23,53 @@ public class UploadFileService extends FileServiceImplBase {
 	private static final Path SERVER_BASE_PATH = Paths.get("src/test/resources/output");
 	private final LinkedList<ByteString> chunkQueue = new LinkedList<ByteString>();
 	
-    @Override
-    public StreamObserver<UploadFileRequest> uploadfile(StreamObserver<com.message.proto.File.UploadFileResponse> responseObserver) {
-        return new StreamObserver<UploadFileRequest>() {
-            // upload context variables
-            OutputStream writer;
-            Status status = Status.IN_PROGRESS;
+	
+//	@Override
+//	public StreamObserver<UploadFileRequest> uploadfile(StreamObserver<UploadFileResponse> responseObserver) {
+//		// TODO Auto-generated method stub
+//		return super.uploadfile(responseObserver);
+//	}
+	
+   
+	 @Override
+	    public StreamObserver<UploadFileRequest> uploadfile(StreamObserver<com.message.proto.File.UploadFileResponse> responseObserver) {
+	        return new StreamObserver<UploadFileRequest>() {
+	            // upload context variables
+	            OutputStream writer;
+	            Status status = Status.IN_PROGRESS;
 
-            @Override
-            public void onNext(UploadFileRequest fileUploadRequest) {
-                try{
-                	System.out.println("fileUploadRequest.getFile() : "+fileUploadRequest.getFile());
-                	if(fileUploadRequest.toByteArray().length>0) {
-                	chunkQueue.push(fileUploadRequest.getFile());
-                	}
-                	//File f = new File(fileUploadRequest.getFile());
-                    //writeFile(writer, fileUploadRequest.getFile());
-                }catch (Exception e){
-                    this.onError(e);
-                }
-            }
+	            @Override
+	            public void onNext(UploadFileRequest fileUploadRequest) {
+	                try{
+	                	System.out.println("fileUploadRequest.getFile() : "+fileUploadRequest.getFile());
+	                	if(fileUploadRequest.toByteArray().length>0) {
+	                	chunkQueue.push(fileUploadRequest.getFile());
+	                	}
+	                	//File f = new File(fileUploadRequest.getFile());
+	                    //writeFile(writer, fileUploadRequest.getFile());
+	                }catch (Exception e){
+	                    this.onError(e);
+	                }
+	            }
 
-            @Override
-            public void onError(Throwable throwable) {
-                status = Status.FAILED;
-                this.onCompleted();
-            }
+	            @Override
+	            public void onError(Throwable throwable) {
+	                status = Status.FAILED;
+	                this.onCompleted();
+	            }
 
-            @Override
-            public void onCompleted() {
-                //closeFile(writer);
-                status = Status.IN_PROGRESS.equals(status) ? Status.SUCCESS : status;
-                UploadFileResponse response = UploadFileResponse.newBuilder()
-                        .setStatus(status)
-                        .build();
-                responseObserver.onNext(response);
-                responseObserver.onCompleted();
-            }
-        };
-    }
+	            @Override
+	            public void onCompleted() {
+	                //closeFile(writer);
+	                status = Status.IN_PROGRESS.equals(status) ? Status.SUCCESS : status;
+	                UploadFileResponse response = UploadFileResponse.newBuilder()
+	                        .setStatus(status)
+	                        .build();
+	                responseObserver.onNext(response);
+	                responseObserver.onCompleted();
+	            }
+	        };
+	    }
 
 //    private OutputStream getFilePath(UploadFileRequest request) throws IOException {
 //        var fileName = request.getMetadata().getName() + "." + request.getMetadata().getType();
