@@ -61,6 +61,7 @@ public class Client_1_FileUploadStream{
 		//FileProcessorGrpc.FileProcessorStub blockingStub = FileProcessorGrpc.newStub(channel);
 		Map<Integer,String> filenames = cl.createDict();
 		
+		long startTime = System.currentTimeMillis();
 		for(int i = 1;i<=filenames.size();i++) {
 			File file = mp.processFile(filenames.get(i));
 			byte[] bytes = new byte[(int) file.length()];
@@ -74,7 +75,9 @@ public class Client_1_FileUploadStream{
 			            .setFile(ByteString.copyFrom(bytes)).build();
 			    streamObserver.onNext(uploadRequest);
 		}
-		
+		long stopTime = System.currentTimeMillis();
+		System.out.println(
+				"total request processing for client 1 time is " + ((stopTime - startTime) / 1000.0) + " seconds");
 	}
 
 }

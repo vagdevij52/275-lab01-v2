@@ -40,7 +40,7 @@ public class Client_2_FileUploadStream{
 	}
 	
 	public static void main(String[] args) throws ParseException {
-		Client_1_FileUploadStream cl = new Client_1_FileUploadStream();
+		Client_2_FileUploadStream cl = new Client_2_FileUploadStream();
 		StationService ss = new StationService();
 		MesonetProcessor mp = new MesonetProcessor();
 ;		// channel created for port 9090 with the server
@@ -55,6 +55,7 @@ public class Client_2_FileUploadStream{
 		//FileProcessorGrpc.FileProcessorStub blockingStub = FileProcessorGrpc.newStub(channel);
 		Map<Integer,String> filenames = cl.createDict();
 		
+		long startTime = System.currentTimeMillis();
 		for(int i = 1;i<=filenames.size();i++) {
 			File file = mp.processFile(filenames.get(i));
 			byte[] bytes = new byte[(int) file.length()];
@@ -68,7 +69,9 @@ public class Client_2_FileUploadStream{
 			            .setFile(ByteString.copyFrom(bytes)).build();
 			    streamObserver.onNext(uploadRequest);
 		}
-		
+		long stopTime = System.currentTimeMillis();
+		System.out.println(
+				"total request processing for client 2 time is " + ((stopTime - startTime) / 1000.0) + " seconds");
 	}
 
 }

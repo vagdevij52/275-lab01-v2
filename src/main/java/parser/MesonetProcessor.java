@@ -63,8 +63,9 @@ public class MesonetProcessor {
 		Rectangle region = null;
 		Set<String> stationIDs = null;
 
-		System.out.println("\n\nSource: " + dataSource + "\nCatalog: " + catF.getAbsolutePath() + "\nOutput: "
-				+ outdir.getAbsolutePath());
+//		System.out.println("\n\nSource: " + dataSource + "\nCatalog: " + catF.getAbsolutePath() + "\nOutput: "
+//				+ outdir.getAbsolutePath());
+		System.out.println("file: "+filename);
 
 		long startTime = System.currentTimeMillis();
 		try {
@@ -119,8 +120,8 @@ public class MesonetProcessor {
 			cat.save(catF);
 
 			long stopTime = System.currentTimeMillis();
-			System.out.println(
-					"MADIS Mesonet - total processing time is " + ((stopTime - startTime) / 1000.0) + " seconds");
+//			System.out.println(
+//					"MADIS Mesonet - total processing time is " + ((stopTime - startTime) / 1000.0) + " seconds");
 		} catch (Throwable t) {
 			System.out.println(
 					"Unable to process mesowest data in " + dataSource.getAbsolutePath() + ": " + t.getMessage()+":"+t.getStackTrace());
