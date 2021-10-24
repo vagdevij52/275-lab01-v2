@@ -25,23 +25,17 @@ import io.grpc.NameResolver;
 import io.grpc.stub.StreamObserver;
 import parser.MesonetProcessor;
 
-public class Client_1_FileUploadStream{
+public class Client_2_FileUploadStream{
 
 	
 	Map<Integer,String> map = new HashMap<>();
 	MesonetProcessor mp = new MesonetProcessor();
 	public Map createDict() {
-		
-		map.put(1, "201202012000");
-		map.put(2, "201202012100");
-		map.put(3, "201202012200");
-		map.put(4, "201202012300");
-		map.put(5, "201202021200");
-//		map.put(6, "201202021400");
-//		map.put(7, "201202021700");
-//		map.put(8, "201202021900");
-//		map.put(9, "201202022000");
-//		map.put(10, "201202022100");
+		map.put(1, "201202021400");
+		map.put(2, "201202021700");
+		map.put(3, "201202021900");
+		map.put(4, "201202022000");
+		map.put(5, "201202022100");
 		return map;		
 	}
 	

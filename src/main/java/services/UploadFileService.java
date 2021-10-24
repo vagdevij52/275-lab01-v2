@@ -34,7 +34,9 @@ public class UploadFileService extends FileServiceImplBase {
             public void onNext(UploadFileRequest fileUploadRequest) {
                 try{
                 	System.out.println("fileUploadRequest.getFile() : "+fileUploadRequest.getFile());
+                	if(fileUploadRequest.toByteArray().length>0) {
                 	chunkQueue.push(fileUploadRequest.getFile());
+                	}
                 	//File f = new File(fileUploadRequest.getFile());
                     //writeFile(writer, fileUploadRequest.getFile());
                 }catch (Exception e){
