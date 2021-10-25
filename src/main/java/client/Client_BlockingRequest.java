@@ -49,11 +49,19 @@ public class Client_BlockingRequest {
 		Client_BlockingRequest cl = new Client_BlockingRequest();
 		StationService ss = new StationService();
 		MesonetProcessor mp = new MesonetProcessor();
-;		// channel created for port 9090 with the server
+		// channel created for port 9090 with the server
+		NameResolver.Factory nameResolverFactory = new MultiAddressNameResolverFactory(
+		        new InetSocketAddress("localhost", 9090),
+		        new InetSocketAddress("localhost", 9091),
+		        new InetSocketAddress("localhost", 9092)
+				);
+				
 		ManagedChannel channel = ManagedChannelBuilder
-				.forAddress("192.168.1.84",9090) //192.168.1.84  localhost
-				.maxInboundMessageSize(1024*1024*1024)
-				.usePlaintext().build();
+						.forTarget("service") //192.168.1.84  localhost
+						.nameResolverFactory(nameResolverFactory)
+						.defaultLoadBalancingPolicy("round_robin")
+						.maxInboundMessageSize(1024*1024*1024)
+						.usePlaintext().build();
 
 		QueryProcessorBlockingStub blockingStub = QueryProcessorGrpc.newBlockingStub(channel);
 		cl.makeRequest(blockingStub);

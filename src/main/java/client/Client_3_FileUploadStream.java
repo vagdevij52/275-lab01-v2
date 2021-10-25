@@ -1,6 +1,7 @@
 package client;
 
 import java.io.File;
+import java.net.InetSocketAddress;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,6 +13,7 @@ import com.message.proto.FileServiceGrpc.FileServiceStub;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import io.grpc.NameResolver;
 import io.grpc.stub.StreamObserver;
 import parser.MesonetProcessor;
 
@@ -32,11 +34,19 @@ public class Client_3_FileUploadStream {
 		Client_3_FileUploadStream cl = new Client_3_FileUploadStream();
 		StationService ss = new StationService();
 		MesonetProcessor mp = new MesonetProcessor();
-;		// channel created for port 9090 with the server
+		// channel created for port 9090 with the server
+		NameResolver.Factory nameResolverFactory = new MultiAddressNameResolverFactory(
+		        new InetSocketAddress("localhost", 9090),
+		        new InetSocketAddress("localhost", 9091),
+		        new InetSocketAddress("localhost", 9092)
+				);
+				
 		ManagedChannel channel = ManagedChannelBuilder
-				.forAddress("localhost",9090) //192.168.1.84  localhost
-				.maxInboundMessageSize(1024*1024*1024)
-				.usePlaintext().build();
+						.forTarget("service") //192.168.1.84  localhost
+						.nameResolverFactory(nameResolverFactory)
+						.defaultLoadBalancingPolicy("round_robin")
+						.maxInboundMessageSize(1024*1024*1024)
+						.usePlaintext().build();
 		
 		// we need stubs to call a particular API
 		//fileStub stub = fileGrpc.newStub(channel);
