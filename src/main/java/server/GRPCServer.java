@@ -24,7 +24,7 @@ public class GRPCServer{
 	        	for(int i=0;i<=2;i++) {
 	    			final int p = i;
 	    			int port = 9090+p;
-	    			var serverBuilder = configureExecutor(ServerBuilder.forPort(port));
+	    			var serverBuilder = ServerBuilder.forPort(port).executor(Executors.newSingleThreadExecutor());
 					 server = serverBuilder
 							 .addService(new UploadFileService())
 							 .addService(new UploadFileBlockingService())
@@ -39,25 +39,4 @@ public class GRPCServer{
 				e.printStackTrace();
 			}
 	}
-	
-	
-	private static ServerBuilder<?> configureExecutor(ServerBuilder<?> sb) {
-        var threads = System.getenv("JVM_EXECUTOR_THREADS");
-        var i_threads = Runtime.getRuntime().availableProcessors();
-        if (threads != null && !threads.isEmpty()) {
-          i_threads = Integer.parseInt(threads);
-        }
-
-
-        var value = System.getenv().getOrDefault("JVM_EXECUTOR_TYPE", "single");
-        switch (value) {
-          case "direct": sb = sb.directExecutor();
-          case "single": sb = sb.executor(Executors.newSingleThreadExecutor());
-          case "fixed": sb = sb.executor(Executors.newFixedThreadPool(i_threads));
-          case "workStealing": sb = sb.executor(Executors.newWorkStealingPool(2*i_threads));
-          case "cached": sb = sb.executor(Executors.newCachedThreadPool());
-        }
-
-        return sb;
-      }
 }

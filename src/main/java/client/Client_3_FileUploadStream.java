@@ -61,7 +61,7 @@ public class Client_3_FileUploadStream {
 		}
 		long stopTime = System.currentTimeMillis();
 		System.out.println(
-				"total request processing for client 2 time is " + ((stopTime - startTime) / 1000.0) + " seconds");
+				"total request processing for client 3 time is " + ((stopTime - startTime) / 1000.0) + " seconds");
 	}
 	
 }

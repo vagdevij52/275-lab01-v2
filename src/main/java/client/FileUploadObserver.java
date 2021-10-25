@@ -9,9 +9,9 @@ class FileUploadObserver implements StreamObserver<UploadFileResponse> {
 
     @Override
     public void onNext(UploadFileResponse fileUploadResponse) {
-        System.out.println(
-                "File upload status :: " + fileUploadResponse.getStatus()
-        );
+//        System.out.println(
+//                "File upload status :: " + fileUploadResponse.getStatus()
+//        );
     }
 
     @Override

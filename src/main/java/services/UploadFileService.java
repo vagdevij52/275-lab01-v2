@@ -23,13 +23,6 @@ public class UploadFileService extends FileServiceImplBase {
 	private static final Path SERVER_BASE_PATH = Paths.get("src/test/resources/output");
 	private final LinkedList<ByteString> chunkQueue = new LinkedList<ByteString>();
 	
-	
-//	@Override
-//	public StreamObserver<UploadFileRequest> uploadfile(StreamObserver<UploadFileResponse> responseObserver) {
-//		// TODO Auto-generated method stub
-//		return super.uploadfile(responseObserver);
-//	}
-	
    
 	 @Override
 	    public StreamObserver<UploadFileRequest> uploadfile(StreamObserver<com.message.proto.File.UploadFileResponse> responseObserver) {
@@ -41,12 +34,13 @@ public class UploadFileService extends FileServiceImplBase {
 	            @Override
 	            public void onNext(UploadFileRequest fileUploadRequest) {
 	                try{
-	                	System.out.println("fileUploadRequest.getFile() : "+fileUploadRequest.getFile());
-	                	if(fileUploadRequest.toByteArray().length>0) {
-	                	chunkQueue.push(fileUploadRequest.getFile());
-	                	}
+//	                	System.out.println("fileUploadRequest.getFile() : "+fileUploadRequest.getFile());
+//	                	if(fileUploadRequest.toByteArray().length>0) {
+//	                	chunkQueue.push(fileUploadRequest.getFile());
+//	                	}
+	                	
 	                	//File f = new File(fileUploadRequest.getFile());
-	                    //writeFile(writer, fileUploadRequest.getFile());
+	                    writeFile(writer, fileUploadRequest.getFile());
 	                }catch (Exception e){
 	                    this.onError(e);
 	                }
@@ -76,17 +70,17 @@ public class UploadFileService extends FileServiceImplBase {
 //        return Files.newOutputStream(SERVER_BASE_PATH.resolve(fileName), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
 //    }
 
-//    private void writeFile(OutputStream writer, ByteString content) throws IOException {
-//        writer.write(content.toByteArray());
-//        writer.flush();
-//    }
+    private void writeFile(OutputStream writer, ByteString content) throws IOException {
+        writer.write(content.toByteArray());
+        writer.flush();
+    }
 
-//    private void closeFile(OutputStream writer){
-//        try {
-//            writer.close();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
+    private void closeFile(OutputStream writer){
+        try {
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }
