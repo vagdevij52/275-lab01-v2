@@ -51,7 +51,7 @@ public class Client_BlockingRequest {
 		MesonetProcessor mp = new MesonetProcessor();
 ;		// channel created for port 9090 with the server
 		ManagedChannel channel = ManagedChannelBuilder
-				.forAddress("localhost",9090) //192.168.1.84  localhost
+				.forAddress("192.168.1.84",9090) //192.168.1.84  localhost
 				.maxInboundMessageSize(1024*1024*1024)
 				.usePlaintext().build();
 

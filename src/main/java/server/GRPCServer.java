@@ -53,15 +53,20 @@ public class GRPCServer{
 	        
 	        
 	        try {
-				var serverBuilder = configureExecutor(ServerBuilder.forPort(9090));
-				 server = serverBuilder
-						 .addService(new UploadFileService())
-						 .addService(new UploadFileBlockingService())
-						 .maxInboundMessageSize(1024*1024*1024).build();
-				 server.start();
-				 
-				 System.out.println("server started at "+ server.getPort());
-			        server.awaitTermination();
+	        	
+	        	for(int i=0;i<=2;i++) {
+	    			final int p = i;
+	    			int port = 9090+p;
+	    			var serverBuilder = configureExecutor(ServerBuilder.forPort(port));
+					 server = serverBuilder
+							 .addService(new UploadFileService())
+							 .addService(new UploadFileBlockingService())
+							 .maxInboundMessageSize(1024*1024*1024).build();
+					 server.start();
+					 
+					 System.out.println("server started at "+ server.getPort());
+				        server.awaitTermination();
+	    		}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
