@@ -25,21 +25,7 @@ public class ServerAddressNameResolverFactory extends NameResolver.Factory{
 	public NameResolver newNameResolver(URI targetUri, Attributes params) {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-//	@Override
-//	public String getDefaultScheme() {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	@Override
-//	public NameResolver newNameResolver(URI targetUri, Args args) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-
-	
+	}	
 	@Override
     public NameResolver newNameResolver(URI notUsedUri, NameResolver.Args args) {
         return new NameResolver() {

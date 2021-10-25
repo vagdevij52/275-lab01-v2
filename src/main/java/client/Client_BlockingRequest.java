@@ -21,8 +21,6 @@ import com.message.proto.Query.QueryReply;
 import com.message.proto.Query.QueryRequest;
 import com.message.proto.QueryProcessorGrpc;
 import com.message.proto.QueryProcessorGrpc.QueryProcessorBlockingStub;
-import com.yrrhelp.grpc.stationGrpc;
-import com.yrrhelp.grpc.stationGrpc.stationBlockingStub;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -47,9 +45,7 @@ public class Client_BlockingRequest {
 	
 	public static void main(String[] args) throws ParseException, FileNotFoundException {
 		Client_BlockingRequest cl = new Client_BlockingRequest();
-		StationService ss = new StationService();
 		MesonetProcessor mp = new MesonetProcessor();
-		// channel created for port 9090 with the server
 		NameResolver.Factory nameResolverFactory = new MultiAddressNameResolverFactory(
 		        new InetSocketAddress("localhost", 9090),
 		        new InetSocketAddress("localhost", 9091),

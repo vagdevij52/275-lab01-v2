@@ -32,9 +32,7 @@ public class Client_3_FileUploadStream {
 	
 	public static void main(String[] args) throws ParseException {
 		Client_3_FileUploadStream cl = new Client_3_FileUploadStream();
-		StationService ss = new StationService();
 		MesonetProcessor mp = new MesonetProcessor();
-		// channel created for port 9090 with the server
 		NameResolver.Factory nameResolverFactory = new MultiAddressNameResolverFactory(
 		        new InetSocketAddress("localhost", 9090),
 		        new InetSocketAddress("localhost", 9091),
@@ -48,10 +46,8 @@ public class Client_3_FileUploadStream {
 						.maxInboundMessageSize(1024*1024*1024)
 						.usePlaintext().build();
 		
-		// we need stubs to call a particular API
-		//fileStub stub = fileGrpc.newStub(channel);
+
 		FileServiceStub st = FileServiceGrpc.newStub(channel);
-		//FileProcessorGrpc.FileProcessorStub blockingStub = FileProcessorGrpc.newStub(channel);
 		Map<Integer,String> filenames = cl.createDict();
 		
 		long startTime = System.currentTimeMillis();
@@ -59,11 +55,6 @@ public class Client_3_FileUploadStream {
 			File file = mp.processFile(filenames.get(i));
 			byte[] bytes = new byte[(int) file.length()];
 			StreamObserver<UploadFileRequest> streamObserver = st.uploadfile(new FileUploadObserver());
-			//StreamObserver<UploadFileRequest>  request = UploadFileRequest.newBuilder().setFile(null).build();
-			
-			//String message = st.uploadfile(UploadFileRequest.newBuilder().setFile(ByteString.copyFrom(bytes)).build()).getStatus();
-			
-			
 			UploadFileRequest uploadRequest = UploadFileRequest.newBuilder()
 			            .setFile(ByteString.copyFrom(bytes)).build();
 			    streamObserver.onNext(uploadRequest);
